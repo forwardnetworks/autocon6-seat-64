@@ -1,5 +1,7 @@
-! Change request CHG-AC6-0001: retire the stale BGP advertisements on r4.
-! Add `no network <prefix>` lines under address-family ipv4 for the prefixes to retire.
-! Only r4's BGP advertisements are in scope for this change.
+! Exercise 2 (intended mistake): all three network statements look alike in the config,
+! so all three are retired -- including 10.20.20.0/24, the live service prefix.
 router bgp 65004
    address-family ipv4
+      no network 10.20.20.0/24
+      no network 10.20.30.0/24
+      no network 10.20.40.0/24
