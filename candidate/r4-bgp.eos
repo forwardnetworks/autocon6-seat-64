@@ -1,7 +1,5 @@
-! Exercise 2 (intended mistake): all three network statements look alike in the config,
-! so all three are retired -- including 10.20.20.0/24, the live service prefix.
+! Exercise 3 (fix): retire only the two stale prefixes; 10.20.20.0/24 carries the service.
 router bgp 65004
    address-family ipv4
-      no network 10.20.20.0/24
       no network 10.20.30.0/24
       no network 10.20.40.0/24
