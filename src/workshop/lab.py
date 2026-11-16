@@ -150,6 +150,14 @@ def up(settings: Settings, log) -> None:
     """Start the lab if needed: netlab builds it and configures every router itself. Safe to re-run (a running lab is left as it is)."""
     states = containers()
     if not states:
+        if (lab_dir(settings) / "netlab.lock").exists():
+            # The containers are gone but netlab's files from the last lab are not (a Codespace rebuild, or containers removed):
+            # `netlab up` would refuse ("another lab running in this directory"). netlab clears its own leftovers first.
+            log("the lab's containers are gone but netlab's files from the last one are still here: netlab clears them first ...")
+            try:
+                netlab(settings, log, "down", "--cleanup")
+            except LabError:
+                (lab_dir(settings) / "netlab.lock").unlink(missing_ok=True)  # nothing left to take down: only the lock stood in the way
         log("starting the lab: netlab creates the containers, then configures each router (Netmiko, over SSH) ...")
         netlab(settings, log, "up", "-p", "clab")
     elif any(state != "running" for state in states.values()):
