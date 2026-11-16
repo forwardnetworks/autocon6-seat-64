@@ -106,7 +106,7 @@ workshop verify compare     # every requirement on that model, verdict by verdic
 network, and "predicted PASS, collected PASS: as predicted"), then **what really changed in the routing tables** between
 the baseline and now, then **What this means**. A `DIFFERENT from the prediction` line is the thing to look for.
 
-The last line should start `verify: MATCH`. That closes the loop: Baseline → Change → Predict → Approve → Deploy → Verify.
+The last line should start `verify: MATCH`. That closes the loop: Baseline → Propose → Predict → Approve → Deploy → Verify.
 
 Don't expect the network to look different. Retiring stale advertisements removes no live route, so every path and
 route is the same as before. That's the good result.

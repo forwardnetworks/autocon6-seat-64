@@ -68,7 +68,7 @@ repository refuses plain merge commits.)
 
 The only way to merge is a green check, so approval is a person looking at evidence and not a hunch. That holds no matter who wrote the change or when.
 
-**Behind?** No red PR of your own? From `main`, make the fix on a new branch: tick only the two stale prefixes on the Your lab page's Change stage and press **Open pull request** (it makes the branch for you), or `git switch -c fix-it`, edit, commit, push, `gh pr create --fill`. Merge it when it is green.
+**Behind?** No red PR of your own? From `main`, make the fix on a new branch: tick only the two stale prefixes on the Your lab page's Propose stage and press **Open pull request** (it makes the branch for you), or `git switch -c fix-it`, edit, commit, push, `gh pr create --fill`. Merge it when it is green.
 
 ## Finished early?
 

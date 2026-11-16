@@ -248,7 +248,7 @@ It serves the **Your lab** tab on port 8765. Its buttons run the same `workshop`
 - `workshop explain`: Predict Assist's summaries of the change and its impact
   (**SDK** `predict_assist.assist_config_diff_summary`, `assist_impact_diff_summary`, `assist_change_set_overview`). If the prediction failed, it
   also asks Forward AI why. The **forward/advice** check runs this.
-- `workshop propose`: **SDK** `predict_assist.assist_change_set_commands`: Forward drafts r4's lines from `intent.md`.
+- `workshop propose`: **SDK** `predict_assist.assist_change_set_commands`: Forward drafts r4's lines from `intent.md`. One way to do the loop's **Propose** step (writing the candidate); ticking prefixes on the Your lab page, or editing the file, are the others.
   Nothing is judged until Predict evaluates it.
 - `workshop agent`: propose → predict → explain, in a loop until the gate passes, stopping before approval.
 - `workshop matrix`: `workshop predict` on every way of retiring r4's advertisements, side by side.

@@ -251,7 +251,7 @@ def status_lines(baseline: dict[str, Any] | None, deploy: dict[str, Any] | None,
         out.append(f"  Baseline  done      snapshot {baseline.get('snapshot')}, requirements {report}   [Collector + Observability]")
     else:
         out.append("  Baseline  not yet   run `workshop baseline collect`   [Collector + Observability]")
-    out.append(f"  Change    {'written' if candidate_changes else 'empty':<9} candidate/r4-bgp.eos has {candidate_changes} change line(s)   [Intent]")
+    out.append(f"  Propose   {'written' if candidate_changes else 'empty':<9} candidate/r4-bgp.eos has {candidate_changes} change line(s)   [Intent]")
     if deploy:
         out.append(f"  Deploy    done      {max(len(deploy.get('lines', [])) - 2, 0)} change(s) applied to r4 at {str(deploy.get('finished_at', ''))[11:19]} UTC   [Executor]")
     else:

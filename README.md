@@ -2,14 +2,14 @@
 
 Your own lab: four routers, a client and a service (plus four more hosts behind r2 and r3), and a Forward network that models them.
 
-**The loop:** Baseline → Change → Predict → Approve → Deploy → Verify.
+**The loop:** Baseline → Propose → Predict → Approve → Deploy → Verify.
 
 | Step | Where | Command / action |
 |---|---|---|
 | 0. Check your setup | Codespace terminal | `workshop doctor` |
 | 1. Start the lab | Codespace terminal | `workshop up` (netlab builds and configures it) |
 | 2. Baseline | Codespace terminal | `workshop baseline collect`, `upload`, `wait`, `check` |
-| 3. Change | Editor → `candidate/r4-bgp.eos` | edit, commit on a branch, open a pull request |
+| 3. Propose | Editor → `candidate/r4-bgp.eos` | edit, commit on a branch, open a pull request |
 | 4. Predict | GitHub → your pull request (or the terminal) | read the **forward/predict** check (or `workshop predict changeset`, `run`, `check`) |
 | 5. Approve | GitHub | merge only a green check |
 | 6. Deploy | Codespace terminal | `git pull`, then `workshop deploy gates`, `render`, `apply`, `readback` (with `--pr N --confirm HASH`) |

@@ -338,12 +338,13 @@ def _doctor(settings: config.Settings, args) -> int:
 
 
 def _up(settings: config.Settings, args) -> int:
-    from workshop import lab
+    from workshop import deploy, lab
 
     banner(settings, "up")
     try:
-        lab.up(settings, log)
-    except lab.LabError as exc:
+        with deploy.lab_lock(settings):  # one bring-up at a time (the page's catch-up and the terminal): never one clearing the other's build
+            lab.up(settings, log)
+    except (lab.LabError, deploy.Refused) as exc:
         log(f"workshop up: {exc}")
         return EXIT["ERROR"]
     log("lab is up at baseline")

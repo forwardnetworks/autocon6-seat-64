@@ -604,7 +604,7 @@
     }
    ],
    "run": [],
-   "catchup": "Makes sure the lab is up, puts r4's advertisements back to the baseline and takes a fresh baseline. Use this if Deploy keeps saying STALE or the routers drifted. This restarts the loop from the Change step: your merged change stays on main, and the new baseline makes the old approval stale. Make your next change on a new branch. Your candidate file is cleared.",
+   "catchup": "Makes sure the lab is up, puts r4's advertisements back to the baseline and takes a fresh baseline. Use this if Deploy keeps saying STALE or the routers drifted. This restarts the loop from the Propose step: your merged change stays on main, and the new baseline makes the old approval stale. Make your next change on a new branch. Your candidate file is cleared.",
    "data": [
     {
      "topic": "diff",
@@ -741,7 +741,7 @@
      "cmd": "workshop verify compare"
     }
    ],
-   "catchup": "Makes sure the lab is up, puts r4's advertisements back to the baseline and takes a fresh baseline. This restarts the loop from the Change step: your merged change stays on main, and the new baseline makes the old approval stale. Make your next change on a new branch. Your candidate file is cleared.",
+   "catchup": "Makes sure the lab is up, puts r4's advertisements back to the baseline and takes a fresh baseline. This restarts the loop from the Propose step: your merged change stays on main, and the new baseline makes the old approval stale. Make your next change on a new branch. Your candidate file is cleared.",
    "data": [
     {
      "topic": "diff",
