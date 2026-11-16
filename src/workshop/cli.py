@@ -88,16 +88,18 @@ def banner(settings: config.Settings, action: str) -> None:
 def _way_forward(status: str) -> str:
     """What to do after a predict step stopped, by its result word."""
     if status == "STALE":
-        return ("Your baseline isn't current (the routers changed, or a newer snapshot exists): the four baseline steps, "
-                "`workshop baseline collect`, `upload`, `wait`, `check`, then start again with `workshop predict changeset`.")
+        return ("Your baseline isn't current or doesn't pass (the routers changed, or a newer snapshot exists): the four baseline steps, "
+                "`workshop baseline collect`, `upload`, `wait`, `check` (if that check fails, `workshop restore` first), then start "
+                "again with `workshop predict changeset`.")
     if status == "FAIL":
         return "Your baseline itself fails its requirements: `workshop restore`, then the four baseline steps, then `workshop predict changeset`."
     return "Read the reason above; then start again with `workshop predict changeset` (a Forward timeout usually passes on a second try)."
 
 
 # Commands (and steps) that talk to the routers or the client: they need the lab running. A Codespace that idles stops and loses it.
-_LAB_STEPS = {"probe": None, "link": None, "restore": None, "baseline": {None, "collect"}, "verify": {None, "probe", "collect"},
-              "deploy": {None, "gates", "render", "apply", "readback"}, "revert": {"plan", "apply"}}
+_LAB_STEPS = {"probe": None, "link": None, "restore": None, "baseline": {None, "collect", "check", "prepare", "judge"},
+              "verify": {None, "probe", "collect", "compare"}, "deploy": {None, "gates", "render", "apply", "readback"},
+              "revert": {"plan", "apply", "compare"}}
 
 
 def _needs_lab(args) -> bool:
@@ -510,6 +512,7 @@ def _predict(settings: config.Settings, args) -> int:
         else:
             stopped.unlink(missing_ok=True)
     elif step != "changeset":
+        stopped.unlink(missing_ok=True)  # the whole prediction in one go (CI, catch-up): an older step's note no longer applies
         m = predict.run(settings, inputs, log=log)
     else:
         state.unlink(missing_ok=True)  # the change set step stopped: write that as the evidence, so the PR says why
@@ -648,14 +651,15 @@ def _deploy(settings: config.Settings, args) -> int:
         return EXIT["ERROR"]
     with_caveats = getattr(args, "with_caveats", None) or ""
     again = f"workshop deploy {step or 'apply'} " + (f"--pr {args.pr}" if args.pr else f"--evidence {args.evidence}") + (
-        f" --with-caveats {with_caveats}" if with_caveats else "")
+        " --no-github" if args.no_github else "") + (f" --with-caveats {with_caveats}" if with_caveats else "") + (
+        f" --at {args.at}" if getattr(args, "at", None) else "")
     if step != "render" and not args.confirm and not args.pr:
         from workshop.evidence import Manifest
 
         try:  # the hash to confirm comes from the evidence itself, so the refusal can show the exact command
             log("NOT DEPLOYED (ERROR): " + deploy.confirm_refusal(None, Manifest.read(Path(args.evidence)).candidate_sha256, "candidate", again))
         except Exception:  # noqa: BLE001 - no readable evidence: still never a write without --confirm
-            log(f"say which candidate you reviewed: {again} --confirm <the 7-character hash predict printed>")
+            log(f"say which candidate you reviewed: {again} --confirm HASH (HASH: the 7-character hash predict printed)")
         return EXIT["ERROR"]
     try:
         if args.pr:
@@ -852,7 +856,7 @@ def _verify_unpredicted(settings: config.Settings, args) -> int:
     if result["outcome"] == "FAIL":
         failed = ", ".join(r["id"] for r in result["rows"] if r["collected"] != "PASS")
         log(f"What this means: Forward found it, but only after the change was live: {failed}. Back it out: `workshop revert plan`,")
-        log("then `workshop revert apply --confirm <hash>`. Predict asks the same questions before any router changes.")
+        log("then `workshop revert apply --confirm HASH`. Predict asks the same questions before any router changes.")
     return 0 if result["outcome"] == "PASS" else EXIT["FAIL"]
 
 

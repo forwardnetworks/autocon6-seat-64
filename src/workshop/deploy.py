@@ -97,12 +97,12 @@ def confirm_refusal(given: str | None, sha256: str, what: str, command: str) -> 
     g = (given or "").strip()
     if not g:
         why = f"say which {what} you reviewed with --confirm and its hash: {sha7}."
-    elif g.strip("'\"<>").lower() in ("sha7", "hash", "<sha7>"):
+    elif g.strip("'\"<>").lower() in ("sha7", "hash", "n"):
         why = f"--confirm takes the hash itself ({sha7}), not the word in the instructions."
     elif g.isdigit() and len(g) >= 5:
-        why = f"{g} looks like your Forward network's or a snapshot's number; --confirm takes the {what}'s hash: {sha7}."
+        why = f"--confirm {g} looks like your Forward network's or a snapshot's number; --confirm takes the {what}'s hash: {sha7}."
     else:
-        why = (f"{g} is not this {what}'s hash ({sha7}). If you changed it after reading the hash, read it again "
+        why = (f"--confirm {g} is not this {what}'s hash ({sha7}). If you changed it after reading the hash, read it again "
                f"(`workshop status` or the step that printed it) before you confirm.")
     return f"{why}\n  Check it is the one you reviewed, then: {command} --confirm {sha7}"
 

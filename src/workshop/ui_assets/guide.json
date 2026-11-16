@@ -621,7 +621,7 @@
      "label": "Gates",
      "levels": [
       "Every safety check, and nothing is sent.",
-      "You say which change you reviewed with `--confirm <first 7 characters of the candidate hash>`. The evidence must be a live PASS for this lab, the candidate and requirements must be the ones predicted, the pull request must be merged with a green check at that commit, your baseline must still be the newest, and the routers must still match it (nobody changed one by hand).",
+      "You say which change you reviewed with `--confirm HASH` (HASH: the first 7 characters of the candidate hash). The evidence must be a live PASS for this lab, the candidate and requirements must be the ones predicted, the pull request must be merged with a green check at that commit, your baseline must still be the newest, and the routers must still match it (nobody changed one by hand).",
       "Try `--confirm 0000000`: it refuses and prints the value it expects."
      ],
      "hints": [
