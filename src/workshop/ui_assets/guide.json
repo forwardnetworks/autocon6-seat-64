@@ -627,7 +627,7 @@
      "hints": [
       "You need the pull request's number and the 7 characters.",
       "Both are at the top of the green check's summary.",
-      "`workshop deploy gates --pr <N> --confirm <sha7>`."
+      "`workshop deploy gates --pr N --confirm HASH`."
      ],
      "step": "deploy gates"
     },
@@ -642,7 +642,7 @@
      "hints": [
       "It only needs the pull request's number.",
       "It is a dry run: nothing on r4 changes.",
-      "`workshop deploy render --pr <N>`."
+      "`workshop deploy render --pr N`."
      ],
      "step": "deploy render"
     },
@@ -657,7 +657,7 @@
      "hints": [
       "This is the one step that writes. You type the hash.",
       "A refusal means a gate failed: read which one.",
-      "`workshop deploy apply --pr <N> --confirm <sha7>`."
+      "`workshop deploy apply --pr N --confirm HASH`."
      ],
      "step": "deploy apply"
     },

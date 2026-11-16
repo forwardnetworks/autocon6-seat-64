@@ -61,7 +61,7 @@ real life you'd also require a second reviewer. The repository only allows the m
 
 *On github.com instead:* the PR's **Conversation** tab, the green **Squash and merge** button at the bottom, then
 **Confirm squash and merge**. Then in your Codespace: `git switch main` and `git pull`.
-*Hold My Beer (terminal):* `gh pr merge <N> --squash`, then `git switch main && git pull`. (`--squash` matters: this
+*Hold My Beer (terminal):* `gh pr merge N --squash` (N: your PR number), then `git switch main && git pull`. (`--squash` matters: this
 repository refuses plain merge commits.)
 
 ### What you just proved

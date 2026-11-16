@@ -83,6 +83,23 @@ def containers() -> dict[str, str]:
     return {c.name: c.status for c in found}
 
 
+GONE = ("Your lab isn't running. A Codespace that slept or restarted loses its routers (your files and Forward are fine). "
+        "Run `workshop up` (3-10 minutes), then the four baseline steps: workshop baseline collect, upload, wait, check.")
+
+
+def require_running(settings: Settings) -> None:
+    """Refuse, with the way back, when the lab's containers are missing or stopped: the event morning showed a Codespace that
+    idled during a talk came back without them, and the next command died on a Docker error."""
+    try:
+        states = containers()
+    except Exception as exc:  # noqa: BLE001 - no docker at all is a different problem, said plainly
+        raise LabError(f"Docker isn't answering ({type(exc).__name__}): wait a minute after the Codespace starts, then try again") from None
+    expected = node_count(settings.repo_root / "lab" / "topology.yml")
+    running = sum(1 for s in states.values() if s == "running")
+    if running < expected:
+        raise LabError(GONE + (f" ({running} of {expected} lab containers running.)" if states else ""))
+
+
 def netlab(settings: Settings, log, *args: str) -> None:
     """Run a netlab command in this process through netlab's own Python entry point (``netsim.cli.<command>.run``), the code
     behind ``netlab <command>`` in a terminal. netlab prints its own progress; a failure ends in SystemExit, turned into LabError."""

@@ -34,7 +34,7 @@ let Forward tell you what happened. You'll undo it at the end.
    ```
    Don't commit it. It looks finished: all three statements, valid EOS.
 2. **Deploy it, no questions asked.** *Page:* the **Deploy** stage, type the candidate's hash (the Change stage shows
-   it), **Deploy without Predict**. *Terminal:* `workshop deploy apply --without-predict --confirm <sha7>`. It says
+   it), **Deploy without Predict**. *Terminal:* `workshop deploy apply --without-predict --confirm HASH`. It says
    **PREDICT OVERRIDDEN** and opens a **change ticket**: a GitHub issue in your repository (**Issues** tab).
    Then **4. Read back** (or `workshop deploy readback`).
 3. **Find out.** The five verify steps (Verify stage, or `workshop verify probe`, `collect`, `upload`, `wait`,
@@ -42,7 +42,7 @@ let Forward tell you what happened. You'll undo it at the end.
    PATH-SERVICE. Open the change ticket: Forward's verdict is there, with its intent checks before and after and the
    sites that lost the Service. All true. All after the customers noticed.
 4. **Back it out.** **Revert: plan** (or `workshop revert plan`), type the hash it prints, **Revert: apply**
-   (`workshop revert apply --confirm <sha7>`), the four baseline steps, then **Revert: compare**: **MATCH**, and the
+   (`workshop revert apply --confirm HASH`), the four baseline steps, then **Revert: compare**: **MATCH**, and the
    backout lands in the same ticket.
 5. **Empty the candidate** for what comes next: the Change stage with nothing ticked, **Write candidate/r4-bgp.eos**
    (or `git restore candidate/r4-bgp.eos`).

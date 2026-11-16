@@ -718,7 +718,7 @@ def _stages(lab, base, cand, m, prs, deployed, verified) -> list[dict[str, str]]
         out.append(stage("approve", "Approve", "active" if check != "FAILURE" else "failed", f"PR #{pr['number']} open: {check_words(check)}", "merge only a green check"))
     else:
         out.append(stage("approve", "Approve", "todo", "no pull request yet", "open a pull request"))
-    hint = "workshop deploy gates, render, apply, readback --pr N --confirm <sha7>"
+    hint = "workshop deploy gates, render, apply, readback --pr N --confirm HASH"
     if not deployed:
         out.append(stage("deploy", "Deploy", "todo", "not deployed", hint))
     elif deployed.get("predicted") is False:  # Predict overridden: the old way, shown on purpose; never "done"
